@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/app.css">
+
+</head>
+
+<body>
+
+    <div id="app" class="container">
+        <nav class="navbar navbar-light fixed-top">
+            <div class="navbar-text ms-auto pe-3 d-flex">
+                <button class="btn btn-sm btn-outline-success" @click="style.sliderStatus = !style.sliderStatus">
+                    <i class="fas fa-dollar-sign"></i>
+                </button>
+                <div class="ms-2" v-if="cart.length > 0">
+                    <button class="btn btn-success btn-sm dropdown-toggle" id="dropdownCart" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <span class="badge badge-pill text-bg-success">
+                            {{ cartQty }}
+                        </span>
+                        <i class="fas fa-shopping-cart mx-2"></i>
+                        <price :value="Number(cartTotal)">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCart">
+                        <div v-for="(item, index) in cart" :key="index">
+                            <div class="dropdown-item-text text-nowrap text-end">
+                                <span class="badge badge-pill text-bg-warning align-text-top me-1">
+                                    {{item.qty}}
+                                </span>
+                                {{item.product.name}}
+                                <b>
+                                    {{item.product.price * item.qty | currencyFormat}}
+                                </b>
+                                <a href="#" class="badge text-bg-danger text-white text-decoration-none"
+                                    @click.stop="deleteItem(index)">-</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <br>
+        <h1>My Shop</h1>
+        <transition name="custom" enter-active-class="animate__animated animate__fadeInDown"
+            leave-active-class="animate__animated animate__slideOutRight">
+            <div class="" v-if="style.sliderStatus">
+                <div class="row align-items-center pb-3" :class="sliderState">
+                    <label for="" :class="style.label">Max</label>
+                    <input type="number" class="col-2 form-control"
+                        :style="{'width': style.inputWidth,'text-align':'center'}" id="" v-model="maximum">
+                    <input type="range" name="" id="" class="col ps-3 form-range" min="0" max="150" v-model="maximum">
+                </div>
+            </div>
+        </transition>
+        
+        <product-list :products="products" :maximum="maximum" @add="addItem"></product-list>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="/assets/js/app.js"></script>
+</body>
+
+</html>
